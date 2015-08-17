@@ -99,10 +99,21 @@ $(document).ready(function(){
 	if (root != 'www.tumblr.com') {
   //call json
     var posts = tumblr_api_read.posts;
+    var postTags, postName, postCat, postCode;
     //loop through posts
-    for (var i in posts) {
-      $('#project-list').append('<li><a href=' + posts[i].url + '>' + posts[i].tags[0] +'</a></li>');
-      $('#installation-list').append('<li><a href=' + posts[i].url + '>' + posts[i].tags[1]+ '</a></li>');
+    for (var i = 0; i < posts.length; i++) {
+      postTags = posts[i].tags;
+      if(postTags.length <= 1) {
+        continue; // Ignore weird length tags
+      }
+      postName = postTags[0];
+      postCat = postTags[1];
+      postCode = '<li><a href=' + posts[i].url + '>' + postName +'</a></li>';
+      if(postCat === 'projects') {
+        $('#project-list').append(postCode);
+      } else if(postCat === 'installations') {
+        $('#installation-list').append(postCode);
+      }
     }
 
 } else {
