@@ -103,11 +103,14 @@ $(document).ready(function(){
     //loop through posts
     for (var i = 0; i < posts.length; i++) {
       postTags = posts[i].tags;
-      postName = postTags[0];
+      if(postTags.length <= 1) {
+        continue; // Ignore weird length tags
+      }
+      postName = postTags[1];
       postCode = '<li><a href=' + posts[i].url + '>' + postName +'</a></li>';
-      if(postTags.indexOf('projects', 1) >= 0) {
+      if(postTags[0] === 'projects') {
         $('#project-list').append(postCode);
-      } else if(postTags.indexOf('installations', 1) >= 0) {
+      } else if(postTags[0] === 'installations') {
         $('#installation-list').append(postCode);
       }
     }
